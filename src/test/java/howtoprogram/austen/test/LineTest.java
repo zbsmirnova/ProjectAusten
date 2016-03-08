@@ -46,10 +46,8 @@ public class LineTest {
         Assert.assertEquals(5, words.size());
         Assert.assertEquals("hello", words.get(0));
         Assert.assertEquals("there", words.get(1));
-        Assert.assertEquals("and", words.get(1));
-        Assert.assertEquals("hello", words.get(1));
-        Assert.assertEquals("again", words.get(1));
+        Assert.assertEquals("and", words.get(2));
+        Assert.assertEquals("hello", words.get(3));
+        Assert.assertEquals("again", words.get(4));
     }
-
-
 }

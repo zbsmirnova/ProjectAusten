@@ -16,17 +16,22 @@ public class Line {
         for (int i=0; i<length; i++) {
             char c = text.charAt(i);
             if (c == ' ') {
-                String finishedWord = wordBuilder.toString();
-                words.add(finishedWord);
+                addWord(wordBuilder);
                 wordBuilder = new StringBuilder();
             } else {
                 wordBuilder.append(lowerCase.charAt(i));
             }
         }
-        words.add(wordBuilder.toString());
+        addWord(wordBuilder);
     }
 
     public List<String> words() {
         return words;
+    }
+
+    private void addWord(StringBuilder stringBuilder) {
+        if (stringBuilder.length() > 0) {
+            words.add(stringBuilder.toString());
+        }
     }
 }
