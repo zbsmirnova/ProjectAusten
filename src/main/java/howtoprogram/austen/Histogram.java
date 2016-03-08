@@ -1,6 +1,7 @@
 package howtoprogram.austen;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -8,15 +9,28 @@ import java.util.Set;
  */
 public class Histogram {
 
-    public void record(String word) {
+    private Map<String,Integer> counter = new HashMap<>();
 
+    public void record(String word) {
+        Integer currentCount;
+        if (counter.containsKey(word)) {
+            currentCount = counter.get(word);
+        } else {
+            currentCount = 0;
+        }
+        Integer newCount = currentCount + 1;
+        counter.put(word, newCount);
     }
 
     public Set<String> allWords() {
-        return new HashSet<>();
+        return counter.keySet();
     }
 
     public int numberOfTimesGiven(String word) {
-        return 0;
+        if (counter.containsKey(word)) {
+            return counter.get(word);
+        } else {
+            return 0;
+        }
     }
 }
