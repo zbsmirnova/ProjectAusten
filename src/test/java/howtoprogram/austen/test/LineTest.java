@@ -14,10 +14,42 @@ public class LineTest {
     }
 
     @Test
-    public void testOneWord() {
+    public void oneWord() {
         Line line = new Line("hello");
         List<String> words = line.words();
         Assert.assertEquals(1, words.size());
         Assert.assertEquals("hello", words.get(0));
     }
+
+    @Test
+    public void twoWords() {
+        Line line = new Line("hello there");
+        List<String> words = line.words();
+        Assert.assertEquals(2, words.size());
+        Assert.assertEquals("hello", words.get(0));
+        Assert.assertEquals("there", words.get(1));
+    }
+
+    @Test
+    public void wordsAreLowerCase() {
+        Line line = new Line("Hello THERE");
+        List<String> words = line.words();
+        Assert.assertEquals(2, words.size());
+        Assert.assertEquals("hello", words.get(0));
+        Assert.assertEquals("there", words.get(1));
+    }
+
+    @Test
+    public void repeatedWordsAreIncluded() {
+        Line line = new Line("Hello there and hello again");
+        List<String> words = line.words();
+        Assert.assertEquals(5, words.size());
+        Assert.assertEquals("hello", words.get(0));
+        Assert.assertEquals("there", words.get(1));
+        Assert.assertEquals("and", words.get(1));
+        Assert.assertEquals("hello", words.get(1));
+        Assert.assertEquals("again", words.get(1));
+    }
+
+
 }
