@@ -11,6 +11,35 @@ import java.nio.file.Paths;
 public class BookTest {
 
     @Test
+    public void blackBooksTest() throws IOException {
+        Book book = new Book(Paths.get("src/test/resources/books/BlackBooks.txt"));
+        //Three lines of text, several different punctuation marks.
+        Histogram histogram = book.histogram();
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("the"));
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("customer"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("said"));
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("that"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("he"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("would"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("like"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("to"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("buy"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("a"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("book"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("it's"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("not"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("that"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("sort"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("of"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("shop"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("replied"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("bernard"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("so"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("scurried"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("away"));
+    }
+
+    @Test
     public void littleBookOfCalmTest() throws IOException {
         Book book = new Book(Paths.get("src/test/resources/books/TheLittleBookOfCalm.txt"));
         //This book has two lines with several repeated words.
