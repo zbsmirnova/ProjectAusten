@@ -3,12 +3,24 @@ package howtoprogram.austen;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Reads a book from a text file and produces word usage information.
  */
 public class Book {
+
+    public static void main(String[] args) throws IOException {
+        Book book = new Book(Paths.get("src/main/resources/books/PrideAndPrejudice.txt"));
+        Histogram histogram = book.histogram();
+        Set<String> allWords = histogram.allWords();
+        for (String word: allWords) {
+            int count = histogram.numberOfTimesGiven(word);
+            System.out.println(word + " " + count);
+        }
+    }
 
     private Histogram histogram = new Histogram();
 
