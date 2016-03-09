@@ -11,6 +11,23 @@ import java.nio.file.Paths;
 public class BookTest {
 
     @Test
+    public void prideAndPrejudice() throws IOException {
+        Book book = new Book(Paths.get("src/test/resources/books/PPPage1.txt"));
+        //32 lines from the start of Pride and Prejudice
+        Histogram histogram = book.histogram();
+
+        //Check some words that we have counted using a text editor.
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("pride"));
+        Assert.assertEquals(5, histogram.numberOfTimesGiven("it"));
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("and"));
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("bennet"));
+
+        //Check that some words followed by punctuation are counted correctly.
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("you"));
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("she"));
+    }
+
+        @Test
     public void blackBooksTest() throws IOException {
         Book book = new Book(Paths.get("src/test/resources/books/BlackBooks.txt"));
         //Three lines of text, several different punctuation marks.

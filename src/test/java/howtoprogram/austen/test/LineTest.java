@@ -64,6 +64,15 @@ public class LineTest {
     }
 
     @Test
+    public void morePunctuation() {
+        Line line = new Line("Hello; _Goodbye_!");
+        List<String> words = line.words();
+        Assert.assertEquals(2, words.size());
+        Assert.assertEquals("hello", words.get(0));
+        Assert.assertEquals("goodbye", words.get(1));
+    }
+
+    @Test
     public void doubleQuotes() {
         Line line = new Line("\"It's not.\"");
         List<String> words = line.words();

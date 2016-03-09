@@ -42,6 +42,8 @@ public class Line {
         if (c == '!') return true;
         if (c == '?') return true;
         if (c == '\"') return true;
+        if (c == '_') return true;
+        if (c == ';') return true;
         return false;
     }
 }
