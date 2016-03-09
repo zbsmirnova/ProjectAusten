@@ -28,7 +28,7 @@ public class BookTest {
         Assert.assertEquals(1, histogram.numberOfTimesGiven("book"));
         Assert.assertEquals(1, histogram.numberOfTimesGiven("it's"));
         Assert.assertEquals(1, histogram.numberOfTimesGiven("not"));
-        Assert.assertEquals(1, histogram.numberOfTimesGiven("that"));
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("that"));
         Assert.assertEquals(1, histogram.numberOfTimesGiven("sort"));
         Assert.assertEquals(1, histogram.numberOfTimesGiven("of"));
         Assert.assertEquals(1, histogram.numberOfTimesGiven("shop"));

@@ -15,7 +15,7 @@ public class Line {
         String lowerCase = text.toLowerCase();
         for (int i=0; i<length; i++) {
             char c = text.charAt(i);
-            if (c == ' ' | c == '.') {
+            if (isWordTerminator(c)) {
                 addWord(wordBuilder);
                 wordBuilder = new StringBuilder();
             } else {
@@ -33,5 +33,15 @@ public class Line {
         if (stringBuilder.length() > 0) {
             words.add(stringBuilder.toString());
         }
+    }
+
+    private boolean isWordTerminator(char c) {
+        if (c == ' ') return true;
+        if (c == '.') return true;
+        if (c == ',') return true;
+        if (c == '!') return true;
+        if (c == '?') return true;
+        if (c == '\"') return true;
+        return false;
     }
 }

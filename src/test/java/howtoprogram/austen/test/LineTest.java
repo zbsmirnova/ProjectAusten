@@ -52,11 +52,24 @@ public class LineTest {
     }
 
     @Test
-    public void ignoreFullstops() {
-        Line line = new Line("Hello. Goodbye.");
+    public void ignorePunctuation() {
+        Line line = new Line("Hello. Goodbye! Yes? No, no.");
         List<String> words = line.words();
-        Assert.assertEquals(2, words.size());
+        Assert.assertEquals(5, words.size());
         Assert.assertEquals("hello", words.get(0));
         Assert.assertEquals("goodbye", words.get(1));
+        Assert.assertEquals("yes", words.get(2));
+        Assert.assertEquals("no", words.get(3));
+        Assert.assertEquals("no", words.get(4));
+    }
+
+    @Test
+    public void doubleQuotes() {
+        Line line = new Line("\"It's not.\"");
+        List<String> words = line.words();
+        System.out.println("words = " + words);
+        Assert.assertEquals(2, words.size());
+        Assert.assertEquals("it's", words.get(0));
+        Assert.assertEquals("not", words.get(1));
     }
 }
