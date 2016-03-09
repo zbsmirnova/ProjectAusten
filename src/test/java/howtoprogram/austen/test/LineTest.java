@@ -50,4 +50,13 @@ public class LineTest {
         Assert.assertEquals("hello", words.get(3));
         Assert.assertEquals("again", words.get(4));
     }
+
+    @Test
+    public void ignoreFullstops() {
+        Line line = new Line("Hello. Goodbye.");
+        List<String> words = line.words();
+        Assert.assertEquals(2, words.size());
+        Assert.assertEquals("hello", words.get(0));
+        Assert.assertEquals("goodbye", words.get(1));
+    }
 }

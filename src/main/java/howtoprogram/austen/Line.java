@@ -15,7 +15,7 @@ public class Line {
         String lowerCase = text.toLowerCase();
         for (int i=0; i<length; i++) {
             char c = text.charAt(i);
-            if (c == ' ') {
+            if (c == ' ' | c == '.') {
                 addWord(wordBuilder);
                 wordBuilder = new StringBuilder();
             } else {
