@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Set;
 
 public class BookTest {
 
@@ -94,12 +95,18 @@ public class BookTest {
     @Test
     public void shortStory() throws IOException {
         Book book = new Book(Paths.get("src/test/resources/books/ShortStory.txt"));
-        //This book has just four distinct words, spread over three lines.
         Histogram histogram = book.histogram();
-        Assert.assertEquals(4, histogram.allWords().size());
-        Assert.assertTrue(histogram.allWords().contains("the"));
-        Assert.assertTrue(histogram.allWords().contains("beginning"));
-        Assert.assertTrue(histogram.allWords().contains("middle"));
-        Assert.assertTrue(histogram.allWords().contains("end"));
+        //This book has just four distinct words, spread over three lines.
+        Set<String> allWords = histogram.allWords();
+        Assert.assertEquals(4, allWords.size());
+        Assert.assertTrue(allWords.contains("the"));
+        Assert.assertTrue(allWords.contains("beginning"));
+        Assert.assertTrue(allWords.contains("middle"));
+        Assert.assertTrue(allWords.contains("end"));
+
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("the"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("beginning"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("middle"));
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("end"));
     }
 }
