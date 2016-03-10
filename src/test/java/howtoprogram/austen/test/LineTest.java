@@ -7,37 +7,46 @@ import org.junit.Test;
 import java.util.List;
 
 public class LineTest {
-    @Test
-    public void testEmpty() {
-        Line line = new Line("");
-        Assert.assertEquals(0, line.words().size());
-    }
+@Test
+public void testEmpty() {
+    Line line = new Line("");
+    Assert.assertEquals(0, line.words().size());
+}
+
+@Test
+public void oneWord() {
+    Line line = new Line("hello");
+    List<String> words = line.words();
+    Assert.assertEquals(1, words.size());
+    Assert.assertEquals("hello", words.get(0));
+}
+
+@Test
+public void twoWords() {
+    Line line = new Line("hello there");
+    List<String> words = line.words();
+    Assert.assertEquals(2, words.size());
+    Assert.assertEquals("hello", words.get(0));
+    Assert.assertEquals("there", words.get(1));
+}
+
+@Test
+public void doubleSpace() {
+    Line line = new Line("a  b");
+    List<String> words = line.words();
+    Assert.assertEquals(2, words.size());
+    Assert.assertEquals("a", words.get(0));
+    Assert.assertEquals("b", words.get(1));
+}
 
     @Test
-    public void oneWord() {
-        Line line = new Line("hello");
-        List<String> words = line.words();
-        Assert.assertEquals(1, words.size());
-        Assert.assertEquals("hello", words.get(0));
-    }
-
-    @Test
-    public void twoWords() {
-        Line line = new Line("hello there");
-        List<String> words = line.words();
-        Assert.assertEquals(2, words.size());
-        Assert.assertEquals("hello", words.get(0));
-        Assert.assertEquals("there", words.get(1));
-    }
-
-    @Test
-    public void wordsAreLowerCase() {
-        Line line = new Line("Hello THERE");
-        List<String> words = line.words();
-        Assert.assertEquals(2, words.size());
-        Assert.assertEquals("hello", words.get(0));
-        Assert.assertEquals("there", words.get(1));
-    }
+public void wordsAreLowerCase() {
+    Line line = new Line("Hello THERE");
+    List<String> words = line.words();
+    Assert.assertEquals(2, words.size());
+    Assert.assertEquals("hello", words.get(0));
+    Assert.assertEquals("there", words.get(1));
+}
 
     @Test
     public void repeatedWordsAreIncluded() {

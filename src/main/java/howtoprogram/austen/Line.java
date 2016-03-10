@@ -12,14 +12,13 @@ public class Line {
     public Line(String text) {
         StringBuilder wordBuilder = new StringBuilder();
         int length = text.length();
-        String lowerCase = text.toLowerCase();
         for (int i=0; i<length; i++) {
             char c = text.charAt(i);
             if (isWordTerminator(c)) {
                 addWord(wordBuilder);
                 wordBuilder = new StringBuilder();
             } else {
-                wordBuilder.append(lowerCase.charAt(i));
+                wordBuilder.append(text.charAt(i));
             }
         }
         addWord(wordBuilder);
@@ -29,11 +28,11 @@ public class Line {
         return words;
     }
 
-    private void addWord(StringBuilder stringBuilder) {
-        if (stringBuilder.length() > 0) {
-            words.add(stringBuilder.toString());
-        }
+private void addWord(StringBuilder stringBuilder) {
+    if (stringBuilder.length() > 0) {
+        words.add(stringBuilder.toString().toLowerCase());
     }
+}
 
     private boolean isWordTerminator(char c) {
         if (c == ' ') return true;
