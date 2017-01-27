@@ -1,4 +1,4 @@
-package howtoprogram.austen
+package pfb.austen
 
 /**
  * Collects word usage data.

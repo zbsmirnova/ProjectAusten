@@ -1,4 +1,4 @@
-package howtoprogram.austen.test
+package pfb.austen.test
 
 import org.junit.Test
 

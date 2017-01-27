@@ -1,4 +1,4 @@
-package howtoprogram.austen
+package pfb.austen
 
 /**
  * Reads a book from a text file and produces word usage information.
