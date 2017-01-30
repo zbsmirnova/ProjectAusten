@@ -1,5 +1,8 @@
 package pfb.austen
 
+import java.nio.file.Path
+import java.nio.file.Files
+
 /**
  * Collects word usage data.
  */
@@ -20,4 +23,23 @@ class Histogram {
     fun numberOfTimesGiven(word: String): Int {
         return counter[word] ?: 0
     }
+
+    fun totalWords(): Int {
+        var result = 0
+        for (key in counter.keys) {
+            val count = counter[key] ?: 0
+            result = result + count
+        }
+        return result
+    }
+
+fun toCSV(file : Path) {
+    val csvLines = mutableListOf<String>()
+    for (word in allWords()) {
+        val timesGiven = numberOfTimesGiven(word)
+        val line = "$word,$timesGiven"
+        csvLines.add(line)
+    }
+    Files.write(file, csvLines)
+}
 }

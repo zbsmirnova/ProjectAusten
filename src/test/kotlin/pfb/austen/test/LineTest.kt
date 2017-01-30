@@ -42,4 +42,21 @@ class LineTest {
         Assert.assertEquals("there", words[1])
     }
 
+    @Test
+    fun brackets() {
+        val line = Line("(left, right)")
+        val words = line.words()
+        Assert.assertEquals(2, words.size)
+        Assert.assertEquals("left", words[0])
+        Assert.assertEquals("right", words[1])
+    }
+
+    @Test
+    fun singleQuoteAfterComma() {
+        val line = Line("week,' you")
+        val words = line.words()
+        Assert.assertEquals(2, words.size)
+        Assert.assertEquals("week", words[0])
+        Assert.assertEquals("you", words[1])
+    }
 }

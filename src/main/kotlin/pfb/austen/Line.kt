@@ -23,11 +23,17 @@ class Line(line: String) {
         return words
     }
 
-    fun addWord(str: String) {
-        if (str != "") {
-            words.add(str.toLowerCase())
-        }
+fun addWord(str: String) {
+    if (isWord(str)) {
+        words.add(str.toLowerCase())
     }
+}
+
+fun isWord(str: String) : Boolean {
+    if (str == "") return false
+    if (str == "'") return false
+    return true
+}
 
     fun isWordTerminator(c: Char): Boolean {
         if (c == ' ') return true
@@ -39,6 +45,8 @@ class Line(line: String) {
         if (c == '_') return true
         if (c == ';') return true
         if (c == ':') return true
+        if (c == '(') return true
+        if (c == ')') return true
         return false
     }
 }

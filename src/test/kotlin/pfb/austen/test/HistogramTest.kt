@@ -3,6 +3,9 @@ package pfb.austen.test
 import org.junit.Assert
 import org.junit.Test
 import pfb.austen.Histogram
+import java.nio.file.Paths
+import java.nio.file.Files
+
 
 public class HistogramTest {
     @Test
@@ -51,4 +54,40 @@ public class HistogramTest {
         Assert.assertEquals(1, histogram.numberOfTimesGiven("piano"))
         Assert.assertEquals(1, histogram.numberOfTimesGiven("violin"))
     }
+
+    @Test
+    fun totalNumberOfWords() {
+        val histogram = Histogram()
+        Assert.assertEquals(0, histogram.totalWords())
+
+        histogram.record("piano")
+        Assert.assertEquals(1, histogram.totalWords())
+
+        histogram.record("piano")
+        Assert.assertEquals(2, histogram.totalWords())
+
+        histogram.record("cello")
+        Assert.assertEquals(3, histogram.totalWords())
+
+        histogram.record("guitar")
+        Assert.assertEquals(4, histogram.totalWords())
+
+        histogram.record("guitar")
+        Assert.assertEquals(5, histogram.totalWords())
+    }
+
+@Test
+fun toCSVTest() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    histogram.record("piano")
+    histogram.record("violin")
+    val csvFile = Paths.get("HistogramTest.csv")
+    histogram.toCSV(csvFile)
+
+    val lines = Files.readAllLines(csvFile)
+    Assert.assertEquals(2, lines.size)
+    Assert.assertTrue(lines.contains("piano,2"))
+    Assert.assertTrue(lines.contains("violin,1"))
+}
 }

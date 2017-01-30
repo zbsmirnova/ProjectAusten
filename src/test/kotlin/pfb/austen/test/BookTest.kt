@@ -4,6 +4,9 @@ import org.junit.Assert
 import org.junit.Test
 import pfb.austen.Book
 import java.nio.file.Paths
+import pfb.austen.Histogram
+import java.io.IOException
+
 
 class BookTest {
     @Test fun shortStory() {
@@ -67,5 +70,22 @@ class BookTest {
         Assert.assertEquals(1, histogram.numberOfTimesGiven("you"))
         Assert.assertEquals(1, histogram.numberOfTimesGiven("find"))
         Assert.assertEquals(1, histogram.numberOfTimesGiven("calming"))
+    }
+
+    @Test
+    fun prideAndPrejudice() {
+        val book = Book(Paths.get("src/test/resources/books/Page1.txt"))
+        //32 lines from the start of Pride and Prejudice
+        val histogram = book.histogram()
+
+        //Check some words that we have counted using a text editor.
+        Assert.assertEquals(1, histogram.numberOfTimesGiven("pride"))
+        Assert.assertEquals(5, histogram.numberOfTimesGiven("it"))
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("and"))
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("bennet"))
+
+        //Check that some words followed by punctuation are counted correctly.
+        Assert.assertEquals(3, histogram.numberOfTimesGiven("you"))
+        Assert.assertEquals(2, histogram.numberOfTimesGiven("she"))
     }
 }
