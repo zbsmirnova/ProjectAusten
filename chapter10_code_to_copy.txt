@@ -1,0 +1,673 @@
+P85
+package pfb.austen
+
+/**
+ * Represents a line of text read in from a book.
+ */
+class Line(line : String) {
+
+    fun words(): List<String> {
+        return mutableListOf()
+    }
+}
+
+
+P86
+package pfb.austen.test
+
+import org.junit.Test
+import org.junit.Assert
+import pfb.austen.Line
+
+class LineTest {
+    @Test
+    fun testEmpty() {
+        val line = Line("")
+        Assert.assertEquals(0, line.words().size)
+    }
+}
+
+
+
+@Test fun oneWord() {
+    val line = Line("hello")
+    val words = line.words()
+    Assert.assertEquals(1, words.size)
+    Assert.assertEquals("hello", words[0])
+}
+
+
+P87
+@Test fun twoWords() {
+    val line = Line("hello there")
+    val words = line.words()
+    Assert.assertEquals(2, words.size)
+    Assert.assertEquals("hello", words[0])
+    Assert.assertEquals("there", words[1])
+}
+
+
+
+
+package pfb.austen
+
+/**
+ * Represents a line of text read in from a book.
+ */
+class Line(line : String) {
+    val words = mutableListOf<String>()
+
+    fun words(): List<String> {
+        return words
+    }
+}
+
+
+
+P88
+package pfb.austen
+
+/**
+ * Represents a line of text read in from a book.
+ */
+class Line(line : String) {
+    val words = mutableListOf<String>()
+    
+    init {
+        var currentWord = ""
+        for (c in line) {
+            if (c == ' ') {
+                words.add(currentWord)
+                currentWord = ""
+            } else {
+                currentWord = currentWord + c
+            }
+        }
+        words.add(currentWord)
+    }
+
+    fun words(): List<String> {
+        return words
+    }
+}
+
+
+
+
+P89
+@Test fun doubleSpace() {
+    val line = Line("a  b")
+    val words = line.words()
+    Assert.assertEquals(2, words.size.toLong())
+    Assert.assertEquals("a", words[0])
+    Assert.assertEquals("b", words[1])
+}
+
+
+
+P89-90
+package pfb.austen
+
+/**
+ * Represents a line of text read in from a book.
+ */
+class Line(line: String) {
+    val words = mutableListOf<String>()
+
+    init {
+        var currentWord = ""
+        for (c in line) {
+            if (c == ' ') {
+                addWord(currentWord)
+                currentWord = ""
+            } else {
+                currentWord = currentWord + c
+            }
+        }
+        addWord(currentWord)
+    }
+
+    fun words(): List<String> {
+        return words
+    }
+
+    fun addWord(str: String) {
+        if (str != "") {
+            words.add(str)
+        }
+    }
+}
+
+
+
+P90
+@Test fun wordsAreLowerCase() {
+    val line = Line("Hello THERE")
+    val words = line.words()
+    Assert.assertEquals(2, words.size.toLong())
+    Assert.assertEquals("hello", words[0])
+    Assert.assertEquals("there", words[1])
+}
+
+
+
+P91
+package pfb.austen
+
+/**
+ * Collects word usage data.
+ */
+class Histogram {
+
+    fun record(word: String) {}
+
+    fun allWords(): Set<String> {
+        return mutableSetOf()
+    }
+
+    fun numberOfTimesGiven(word: String): Int {
+        return 0
+    }
+}
+
+
+
+
+P92
+package pfb.austen.test
+
+import org.junit.Assert
+import org.junit.Test
+import pfb.austen.Histogram
+
+public class HistogramTest {
+    @Test
+    fun emptyToStartWith() {
+        val histogram = Histogram()
+        Assert.assertEquals(0, histogram.allWords().size)
+    }
+}
+
+
+
+
+P93
+@Test
+fun unknownWord() {
+    val histogram = Histogram()
+    val given = histogram.numberOfTimesGiven("xylophone")
+    Assert.assertEquals(0, given)
+}
+
+
+
+
+@Test
+fun recordOneWord() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    val words = histogram.allWords()
+}
+
+
+
+
+P93-94
+@Test
+fun recordOneWord() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    val words = histogram.allWords()
+    Assert.assertEquals(1, words.size)
+    Assert.assertTrue(words.contains("piano"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("piano"))
+}
+
+
+P94
+@Test
+fun recordOneWordTwice() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    histogram.record("piano")
+    val words = histogram.allWords()
+}
+
+
+P95
+@Test
+fun recordTwoWords() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    histogram.record("violin")
+    val words = histogram.allWords()
+    Assert.assertEquals(2, words.size.toLong())
+    Assert.assertTrue(words.contains("piano"))
+    Assert.assertTrue(words.contains("violin"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("piano"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("violin"))
+}
+
+
+
+
+
+package pfb.austen
+
+/**
+ * Collects word usage data.
+ */
+class Histogram {
+
+    val counter = mutableMapOf<String, Int>()
+
+    fun record(word: String) {
+    }
+
+    fun allWords(): Set<String> {
+        return counter.keys
+    }
+
+    fun numberOfTimesGiven(word: String): Int {
+        return counter[word] ?: 0
+    }
+}
+
+
+
+
+P96-97
+package pfb.austen
+
+/**
+ * Collects word usage data.
+ */
+class Histogram {
+
+    val counter = mutableMapOf<String, Int>()
+
+    fun record(word: String) {
+        val currentCount = counter[word] ?: 0
+        val newCount = currentCount + 1
+        counter.put(word, newCount)
+    }
+
+    fun allWords(): Set<String> {
+        return counter.keys
+    }
+
+    fun numberOfTimesGiven(word: String): Int {
+        return counter[word] ?: 0
+    }
+}
+
+
+
+
+P97-98
+package pfb.austen.test
+
+import org.junit.Assert
+import org.junit.Test
+import pfb.austen.Book
+import java.nio.file.Paths
+
+class BookTest {
+    @Test fun shortStory() {
+        val book = Book(Paths.get("src/test/resources/books/ShortStory.txt"))
+        val allWords = book.histogram.allWords()
+    }
+}
+
+
+
+
+P98
+@Test fun shortStory() {
+    val book = Book(Paths.get("src/test/resources/books/ShortStory.txt"))
+    val allWords = book.histogram.allWords()
+
+    Assert.assertEquals(4, allWords.size)
+
+    Assert.assertTrue(allWords.contains("the"))
+    Assert.assertTrue(allWords.contains("beginning"))
+    Assert.assertTrue(allWords.contains("middle"))
+    Assert.assertTrue(allWords.contains("end"))
+
+    Assert.assertEquals(3, book.histogram.numberOfTimesGiven("the"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("beginning"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("middle"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("end"));
+}
+
+
+
+
+
+P99
+@Test fun horrorStory() {
+    val book = Book(Paths.get("src/test/resources/books/HorrorStory.txt"))
+    val allWords = book.histogram.allWords()
+
+    Assert.assertEquals(7, allWords.size)
+
+    Assert.assertTrue(allWords.contains("it"))
+    Assert.assertTrue(allWords.contains("was"))
+    Assert.assertTrue(allWords.contains("a"))
+    Assert.assertTrue(allWords.contains("and"))
+    Assert.assertTrue(allWords.contains("stormy"))
+    Assert.assertTrue(allWords.contains("night"))
+    Assert.assertTrue(allWords.contains("dark"))
+
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("it"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("was"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("a"))
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("dark"));
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("and"));
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("stormy"));
+    Assert.assertEquals(1, book.histogram.numberOfTimesGiven("night"));
+}
+
+
+
+
+P99-100
+@Test 
+fun littleBookOfCalmTest() {
+    val book = Book(Paths.get("src/test/resources/books/TheLittleBookOfCalm.txt"))
+    //This book has two lines with several repeated words. 
+    //There is also a blank line. 
+    //The two non-blank lines end in full stops. 
+    val histogram = book.histogram
+    Assert.assertEquals(2, histogram.numberOfTimesGiven("this"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("is"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("a"))
+    Assert.assertEquals(3, histogram.numberOfTimesGiven("very"))
+    Assert.assertEquals(2, histogram.numberOfTimesGiven("short"))
+    Assert.assertEquals(2, histogram.numberOfTimesGiven("book"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("we"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("hope"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("that"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("you"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("find"))
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("calming"))
+}
+
+
+
+
+P100-101
+@Test
+fun ignorePunctuation() {
+    val line = Line("Hello. Goodbye! Yes? No, no.")
+    val words = line.words()
+    Assert.assertEquals(5, words.size)
+    Assert.assertEquals("hello", words[0])
+    Assert.assertEquals("goodbye", words[1])
+    Assert.assertEquals("yes", words[2])
+    Assert.assertEquals("no", words[3])
+    Assert.assertEquals("no", words[4])
+}
+
+@Test fun morePunctuation() {
+    val line = Line("Hello; _Goodbye_! X: 5")
+    val words = line.words()
+    Assert.assertEquals(4, words.size)
+    Assert.assertEquals("hello", words[0])
+    Assert.assertEquals("goodbye", words[1])
+    Assert.assertEquals("x", words[2])
+    Assert.assertEquals("5", words[3])
+}
+
+
+
+
+@Test
+fun doubleQuotes() {
+    val line = Line("\"It's not.\"")
+    val words = line.words()
+    Assert.assertEquals(2, words.size)
+    Assert.assertEquals("it's", words[0])
+    Assert.assertEquals("not", words[1])
+}
+
+
+
+
+P102-103
+package pfb.austen
+
+/**
+ * Represents a line of text read in from a book.
+ */
+class Line(line: String) {
+    val words = mutableListOf<String>()
+
+    init {
+        var currentWord = ""
+        for (c in line) {
+            if (isWordTerminator(c)) {
+                addWord(currentWord)
+                currentWord = ""
+            } else {
+                currentWord = currentWord + c
+            }
+        }
+        addWord(currentWord)
+    }
+
+    fun words(): List<String> {
+        return words
+    }
+
+    fun addWord(str: String) {
+        if (str != "") {
+            words.add(str.toLowerCase())
+        }
+    }
+
+    fun isWordTerminator(c: Char): Boolean {
+        if (c == ' ') return true
+        if (c == '.') return true
+        if (c == ',') return true
+        if (c == '!') return true
+        if (c == '?') return true
+        if (c == '\"') return true
+        if (c == '_') return true
+        if (c == ';') return true
+        if (c == ':') return true
+        return false
+    }
+}
+
+
+
+
+P103-104
+@Test
+fun prideAndPrejudice() {
+    val book = Book(Paths.get("src/test/resources/books/Page1.txt"))
+    //32 lines from the start of Pride and Prejudice
+    val histogram = book.histogram
+
+    //Check some words that we have counted using a text editor.
+    Assert.assertEquals(1, histogram.numberOfTimesGiven("pride"))
+    Assert.assertEquals(5, histogram.numberOfTimesGiven("it"))
+    Assert.assertEquals(3, histogram.numberOfTimesGiven("and"))
+    Assert.assertEquals(3, histogram.numberOfTimesGiven("bennet"))
+
+    //Check that some words followed by punctuation are counted correctly.
+    Assert.assertEquals(3, histogram.numberOfTimesGiven("you"))
+    Assert.assertEquals(2, histogram.numberOfTimesGiven("she"))
+}
+
+
+
+P104
+fun main(args: Array<String>) {
+    val book = Book(Paths.get("src/main/resources/books/PrideAndPrejudice.txt"))
+    val histogram = book.histogram
+    val allWords = histogram.allWords()
+    for (word in allWords) {
+        val count = histogram.numberOfTimesGiven(word)
+        println("$word $count")
+    }
+}
+
+
+
+
+P105
+@Test
+fun brackets() {
+    val line = Line("(left, right)")
+    val words = line.words()
+    Assert.assertEquals(2, words.size)
+    Assert.assertEquals("left", words[0])
+    Assert.assertEquals("right", words[1])
+}
+
+
+
+
+P105-106
+fun isWordTerminator(c: Char): Boolean {
+    if (c == ' ') return true
+    if (c == '.') return true
+    if (c == ',') return true
+    if (c == '!') return true
+    if (c == '?') return true
+    if (c == '\"') return true
+    if (c == '_') return true
+    if (c == ';') return true
+    if (c == ':') return true
+    if (c == '(') return true
+    if (c == ')') return true
+    return false
+}
+
+
+
+
+P106
+@Test
+fun singleQuoteAfterComma() {
+    val line = Line("week,' you")
+    val words = line.words()
+    Assert.assertEquals(2, words.size)
+    Assert.assertEquals("week", words[0])
+    Assert.assertEquals("you", words[1])
+}
+
+
+
+
+fun isWord(str: String) : Boolean {
+    if (str == "") return false
+    return true
+}
+
+
+
+
+P107
+fun isWord(str: String) : Boolean {
+    if (str == "") return false
+    if (str == "'") return false
+    return true
+}
+
+
+
+
+P107-108
+@Test
+fun totalNumberOfWords() {
+    val histogram = Histogram()
+    Assert.assertEquals(0, histogram.totalWords())
+
+    histogram.record("piano")
+    Assert.assertEquals(1, histogram.totalWords())
+
+    histogram.record("piano")
+    Assert.assertEquals(2, histogram.totalWords())
+
+    histogram.record("cello")
+    Assert.assertEquals(3, histogram.totalWords())
+
+    histogram.record("guitar")
+    Assert.assertEquals(4, histogram.totalWords())
+
+    histogram.record("guitar")
+    Assert.assertEquals(5, histogram.totalWords())
+}
+
+
+
+
+P108
+fun totalWords() : Int {
+    var result = 0
+    for (key in counter.keys) {
+        val count = counter[key] ?: 0
+        result = result + count
+    }
+    return result
+}
+
+
+
+
+fun main(args: Array<String>) {
+    val book = Book(Paths.get("src/main/resources/books/PrideAndPrejudice.txt"))
+    val totalWords = book.histogram.totalWords()
+    println("Total word count: $totalWords")
+}
+
+
+
+P110
+import java.nio.file.Paths
+import java.nio.file.Files
+
+@Test
+fun toCSVTest() {
+    val histogram = Histogram()
+    histogram.record("piano")
+    histogram.record("piano")
+    histogram.record("violin")
+    val csvFile = Paths.get("HistogramTest.csv")
+    histogram.toCSV(csvFile)
+
+    val lines = Files.readAllLines(csvFile)
+    Assert.assertEquals(2, lines.size)
+    Assert.assertTrue(lines.contains("piano,2"))
+    Assert.assertTrue(lines.contains("violin,1"))
+}
+
+
+
+
+
+P110
+fun toCSV(file : Path) {
+    val csvLines = mutableListOf<String>()
+    for (word in allWords()) {
+        val timesGiven = numberOfTimesGiven(word)
+        val line = "$word,$timesGiven"
+        csvLines.add(line)
+    }
+    Files.write(file, csvLines)
+}
+
+
+
+
+P111
+fun main(args: Array<String>) {
+    val book = Book(Paths.get("src/main/resources/books/PrideAndPrejudice.txt"))
+    val totalWords = book.histogram.totalWords()
+    println("Total word count: $totalWords")
+    val file = Paths.get("PandPWords.csv")
+    book.histogram.toCSV(file)
+}
